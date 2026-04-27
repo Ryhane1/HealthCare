@@ -8,7 +8,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Medecin {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
