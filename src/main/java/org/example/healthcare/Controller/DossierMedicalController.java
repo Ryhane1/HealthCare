@@ -1,5 +1,6 @@
 package org.example.healthcare.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.example.healthcare.DTOs.DossierMedicalDTO;
 import org.example.healthcare.Service.DossierMedicalService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ public class DossierMedicalController {
     private final DossierMedicalService dossierMedicalService;
 
     @PostMapping
+    @Operation(summary = "Créer un dossier médical")
     public ResponseEntity<DossierMedicalDTO> creerDossierMedical
             (@RequestBody DossierMedicalDTO dossierMedicalDTO){
         DossierMedicalDTO dossierMedicalDTO1 = dossierMedicalService.creerDossierMedical(dossierMedicalDTO);
@@ -22,6 +24,7 @@ public class DossierMedicalController {
     }
 
     @PatchMapping("/{id}/diagnostic")
+    @Operation(summary = "Ajouter un diagnostic au dossier médical")
     public ResponseEntity<DossierMedicalDTO> ajouterDiagnostic
             (@PathVariable Long id,
              @RequestBody String diagnostic){
@@ -30,6 +33,7 @@ public class DossierMedicalController {
     }
 
     @PatchMapping("/{id}/Observation")
+    @Operation(summary = "Ajouter des observations au dossier médical")
     public ResponseEntity<DossierMedicalDTO> ajouterObservation
             (@PathVariable Long id,
              @RequestBody String observation){
@@ -39,7 +43,9 @@ public class DossierMedicalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DossierMedicalDTO> getDossierMedical(@PathVariable Long id){
+    @Operation(summary = "Consulter un dossier médical")
+    public ResponseEntity<DossierMedicalDTO> getDossierMedical
+            (@PathVariable Long id){
         DossierMedicalDTO dossier = dossierMedicalService.consulterDossierMedical(id);
         return ResponseEntity.ok(dossier);
     }

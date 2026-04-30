@@ -21,10 +21,10 @@ public class Patient {
     private String telephone;
     private LocalDate dateNaissance;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient")
     private List<RendezVous> rendezVous;
 
-    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "patient")
     private DossierMedical dossierMedical;
 
 }
