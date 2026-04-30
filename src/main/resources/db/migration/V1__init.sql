@@ -3,7 +3,7 @@ CREATE TABLE patient (
          nom VARCHAR(100) NOT NULL,
          prenom VARCHAR(100) NOT NULL,
          email VARCHAR(150) UNIQUE NOT NULL,
-         telephone VARCHAR(20),
+         telephone VARCHAR(100),
          date_naissance DATE
 );
 
