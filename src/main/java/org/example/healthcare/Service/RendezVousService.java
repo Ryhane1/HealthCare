@@ -68,7 +68,7 @@ public class RendezVousService {
 
     public List<RendezVousDTO> filtrerParMedecin(Long id){
         List<RendezVous> rendezVousList =
-                rendezVousRepository.findByMedecin_Id(id);
+                rendezVousRepository.findByMedecinId(id);
         return rendezVousMapper.toDTOlist(rendezVousList);
     }
 
