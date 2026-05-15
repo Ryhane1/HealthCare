@@ -1,0 +1,51 @@
+package org.example.healthcare.security;
+
+import lombok.RequiredArgsConstructor;
+import org.example.healthcare.Model.UserApp;
+import org.example.healthcare.Repository.UserAppRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+
+@Service
+@RequiredArgsConstructor
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final UserAppRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserApp user = userRepository.findUserAppByNom(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Utilisateur introuvable");
+        }
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getNom())
+                .password(user.getPassword())
+                .authorities(new ArrayList<>())
+                .build();
+
+    }
+
+
+
+
+
+
+//    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+//        UserApp user = userRepository.findUserByEmail(email);
+//        if (user == null) {
+//            throw new UsernameNotFoundException("Utilisateur introuvable");
+//        }
+//
+//
+//        return new org.springframework.security.core.userdetails.UserApp
+//                (user.getNom(),user.getPassword(),new ArrayList<>());
+//    }
+
+
+}
