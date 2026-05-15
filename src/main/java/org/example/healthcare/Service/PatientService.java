@@ -32,16 +32,23 @@ public class PatientService {
     }
 
     public void SupprimerPatient( Long id){
+
         patientRepository.deleteById(id);
     }
 
     public List<PatientDTO> listerPatients(){
+
         return patientMapper.toDTOList(patientRepository.findAll());
     }
 
     public PatientDTO consulterPatient (Long id){
+
         return patientMapper.toDTO(patientRepository.findById(id).get());
     }
+
+//    public PatientDTO touver (String mot){
+//        return patientRepository.trouverAvecdiagnostic(mot).stream().
+//    }
 
 
 

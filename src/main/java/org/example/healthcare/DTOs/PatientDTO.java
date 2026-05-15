@@ -21,6 +21,4 @@ public class PatientDTO {
     private String telephone;
     private LocalDate dateNaissance;
 
-
-
 }
