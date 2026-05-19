@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.healthcare.Enums.RoleUser;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class UserApp {
     @Column(unique = true)
     private String email;
     private String password;
-
+    @Enumerated(EnumType.STRING)
+    private RoleUser role;
 
 }

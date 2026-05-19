@@ -1,19 +1,10 @@
--- ============================================================
--- Migration V3: Insertion des données de test
--- Base: UserApp, Medecin, Patient, RendezVous, DossierMedical
--- ============================================================
+INSERT INTO userapp (nom, email, password, role) VALUES
+('admin', 'admin@healthcare.com', '$2a$10$SlVZQcXvLx7RBL2gd9K.pOqfV9tpuWIlnI8YBWqN.OQD4q5G8Ksfa', 'ADMIN'), -- password: admin123
+('medecin1', 'medecin1@healthcare.com', '$2a$10$Rv.8ZsKI.BdxJmJJ3c.ZeOJ8gfVJVIbI8cJbF3OkW0aPHV9iJHzba', 'MEDECIN'), -- password: medecin123
+('medecin2', 'medecin2@healthcare.com', '$2a$10$Rv.8ZsKI.BdxJmJJ3c.ZeOJ8gfVJVIbI8cJbF3OkW0aPHV9iJHzba', 'MEDECIN'), -- password: medecin123
+('patient1', 'patient1@healthcare.com', '$2a$10$h1/bM5EYpQK3bR8sL2nP1.KJx8EkM0W9YpV6tZ3Q4X1C5D9m7Hk4m', 'PATIENT'), -- password: patient123
+('jean.dupont', 'jean.dupont@healthcare.com', '$2a$10$h1/bM5EYpQK3bR8sL2nP1.KJx8EkM0W9YpV6tZ3Q4X1C5D9m7Hk4m', 'PATIENT'); -- password: patient123
 
--- ============================================================
--- 1. Insertion des utilisateurs de l'application (UserApp)
--- ============================================================
-INSERT INTO userapp (nom, email, password) VALUES
-('admin', 'admin@healthcare.com', '$2a$10$SlVZQcXvLx7RBL2gd9K.pOqfV9tpuWIlnI8YBWqN.OQD4q5G8Ksfa'), -- password: admin123
-('medecin1', 'medecin1@healthcare.com', '$2a$10$Rv.8ZsKI.BdxJmJJ3c.ZeOJ8gfVJVIbI8cJbF3OkW0aPHV9iJHzba'), -- password: medecin123
-('receptionniste', 'receptionniste@healthcare.com', '$2a$10$h1/bM5EYpQK3bR8sL2nP1.KJx8EkM0W9YpV6tZ3Q4X1C5D9m7Hk4m'); -- password: recep123
-
--- ============================================================
--- 2. Insertion des médecins
--- ============================================================
 INSERT INTO medecin (nom, specialite, email, telephone) VALUES
 ('Dr. Ahmed Hassan', 'Cardiologie', 'dr.ahmed@clinic.com', '+212612345678'),
 ('Dr. Fatima Benali', 'Dermatologie', 'dr.fatima@clinic.com', '+212612345679'),
@@ -21,9 +12,6 @@ INSERT INTO medecin (nom, specialite, email, telephone) VALUES
 ('Dr. Leila Morocco', 'Neurologie', 'dr.leila@clinic.com', '+212612345681'),
 ('Dr. Karim Saadi', 'Radiologie', 'dr.karim@clinic.com', '+212612345682');
 
--- ============================================================
--- 3. Insertion des patients
--- ============================================================
 INSERT INTO patient (nom, prenom, email, telephone, date_naissance) VALUES
 ('Dupont', 'Jean', 'jean.dupont@email.com', '+212611111111', '1985-05-15'),
 ('Martin', 'Marie', 'marie.martin@email.com', '+212611111112', '1990-08-22'),
@@ -34,9 +22,6 @@ INSERT INTO patient (nom, prenom, email, telephone, date_naissance) VALUES
 ('Durand', 'Paul', 'paul.durand@email.com', '+212611111117', '1980-02-14'),
 ('Fontaine', 'Claire', 'claire.fontaine@email.com', '+212611111118', '1993-09-30');
 
--- ============================================================
--- 4. Insertion des rendez-vous
--- ============================================================
 INSERT INTO rendez_vous (date_rendez_vous, statut, patient_id, medecin_id) VALUES
 -- Rendez-vous pour Jean Dupont (Patient 1) avec Dr. Ahmed Hassan (Medecin 1)
 ('2026-05-20 10:00:00', 'CONFIRME', 1, 1),
@@ -66,9 +51,6 @@ INSERT INTO rendez_vous (date_rendez_vous, statut, patient_id, medecin_id) VALUE
 -- Rendez-vous pour Claire Fontaine (Patient 8) avec Dr. Mohamed El Khatib (Medecin 3)
 ('2026-05-30 15:30:00', 'CONFIRME', 8, 3);
 
--- ============================================================
--- 5. Insertion des dossiers médicaux
--- ============================================================
 INSERT INTO dossier_medical (diagnostic, observation, date_creation, patient_id) VALUES
 ('Hypertension artérielle', 'Tension élevée. Recommandation : réduction du sel et activité physique régulière. Traitement : Lisinopril 10mg/jour.', '2026-01-15', 1),
 ('Acné modérée', 'Acné hormonale. Traitement recommandé : Nettoyage régulier et cream antibacterienne. Éviter l\'exposition au soleil.', '2026-02-10', 2),
@@ -83,4 +65,5 @@ INSERT INTO dossier_medical (diagnostic, observation, date_creation, patient_id)
 -- Fin des insertions de données de test
 -- ============================================================
 COMMIT;
+
 

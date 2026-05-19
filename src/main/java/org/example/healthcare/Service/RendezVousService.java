@@ -9,9 +9,11 @@ import org.example.healthcare.Repository.PatientRepository;
 import org.example.healthcare.Repository.RendezVousRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -55,23 +57,26 @@ public class RendezVousService {
 
     }
 
-    public List<RendezVousDTO>  listerRendezVous(){
-        return rendezVousMapper.toDTOlist(rendezVousRepository.findAll());
+    public Page<RendezVousDTO> listerRendezVous(Pageable pageable){
+         Page<RendezVous> rendezVousList = rendezVousRepository.findAll(pageable);
+        return rendezVousList.map(rendezVousMapper::toDTO);
     }
 
-    public List<RendezVousDTO> filtrerParPatient(Long id){
-        List<RendezVous> rendezVousList =
-                rendezVousRepository.findByPatient_Id(id);
+    public Page<RendezVousDTO> filtrerParPatient(Long id , Pageable pageable){
+        Page<RendezVous> rendezVousList =
+                rendezVousRepository.findByPatient_Id(id, pageable);
 
-        return rendezVousMapper.toDTOlist(rendezVousList);
+        return rendezVousList.map(rendezVousMapper::toDTO);
     }
 
-    public List<RendezVousDTO> filtrerParMedecin(Long id){
-        List<RendezVous> rendezVousList =
-                rendezVousRepository.findByMedecinId(id);
-        return rendezVousMapper.toDTOlist(rendezVousList);
+    public Page<RendezVousDTO> filtrerParMedecin(Long id, Pageable pageable){
+        Page<RendezVous> rendezVousList =
+                rendezVousRepository.findByMedecinId(id , pageable);
+        return rendezVousList.map(rendezVousMapper::toDTO);
     }
-
-
+    public Page<RendezVousDTO> chercherParDate(LocalDate date, Pageable pageable) {
+        Page<RendezVous> rendezVousList = rendezVousRepository.findByDateRendezVous(date, pageable);
+        return rendezVousList.map(rendezVousMapper::toDTO);
+    }
 
 }

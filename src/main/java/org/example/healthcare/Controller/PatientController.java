@@ -3,12 +3,15 @@ package org.example.healthcare.Controller;
 import io.swagger.v3.oas.annotations.Operation;
 import org.example.healthcare.DTOs.PatientDTO;
 import org.example.healthcare.Service.PatientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+
 
 @RestController
 @RequiredArgsConstructor
@@ -40,19 +43,35 @@ public class PatientController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    @Operation(summary = "Lister tous les patients")
-    public ResponseEntity<List<PatientDTO>> lisitePatient (){
-        List<PatientDTO> dtoList = patientService.listerPatients();
-        return ResponseEntity.ok().body(dtoList);
-    }
-
     @GetMapping("/{id}")
     @Operation(summary = "Consulter les détails d’un patient")
     public ResponseEntity<PatientDTO> consulterPatient (@RequestParam Long id){
 
         return ResponseEntity.ok().body(patientService.consulterPatient(id));
     }
+
+    @GetMapping
+    @Operation(summary = "Lister tous les patients")
+    public ResponseEntity<Page<PatientDTO>> lisitePatient (Pageable pageable){
+        Page<PatientDTO> dtoList = patientService.listerPatients(pageable);
+        return ResponseEntity.ok().body(dtoList);
+    }
+
+    @GetMapping("/triParNom")
+    @Operation(summary = "Lister tous les patients triés Par nom")
+    public ResponseEntity<Page<PatientDTO>> lisiterParNom (Pageable pageable){
+        Page<PatientDTO> dtoList = patientService.listerPatients(pageable);
+        return ResponseEntity.ok().body(dtoList);
+    }
+
+    @GetMapping("/chercherParNom")
+    @Operation(summary = "Chercher les patients Par nom")
+    public ResponseEntity<Page<PatientDTO>> chercherParNom (@RequestParam String nom,
+                                                          Pageable pageable){
+        Page<PatientDTO> dtoList = patientService.chercherPatients(nom, pageable);
+        return ResponseEntity.ok().body(dtoList);
+    }
+
 
 
 

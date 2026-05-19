@@ -6,6 +6,8 @@ import org.example.healthcare.Model.DossierMedical;
 import org.example.healthcare.Repository.DossierMedicalRepository;
 import org.example.healthcare.Repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,6 +42,11 @@ public class DossierMedicalService {
 
     public DossierMedicalDTO consulterDossierMedical(Long id){
         return dossierMedicalMapper.toDTo(dossierMedicalRepository.findById(id).orElseThrow());
+    }
+
+    public Page<DossierMedicalDTO> consulterAllDossierMedical(Pageable pageable){
+         Page<DossierMedical> dossierList = dossierMedicalRepository.findAll(pageable);
+         return dossierList.map(dossierMedicalMapper::toDTo);
     }
 
 

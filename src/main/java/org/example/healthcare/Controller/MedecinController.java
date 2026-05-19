@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.example.healthcare.DTOs.MedecinDTO;
 import org.example.healthcare.Service.MedecinService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,12 +44,22 @@ public class MedecinController {
 
     @GetMapping
     @Operation(summary = "Lister tous les médecins")
-    public ResponseEntity<List<MedecinDTO>> listerMedecin (){
-
-        return ResponseEntity.ok(medecinService.listerMedecin());
+    public ResponseEntity<Page<MedecinDTO>> listerMedecin (Pageable pageable){
+        return ResponseEntity.ok(medecinService.listerMedecin(pageable));
     }
 
+    @GetMapping("/triParSpecialite")
+    @Operation(summary = "Lister tous les médecins Tries par spécialité")
+    public ResponseEntity<Page<MedecinDTO>> listerMedecinParSpecialite (Pageable pageable){
+        return ResponseEntity.ok(medecinService.listerMedecin(pageable));
+    }
 
+    @GetMapping("/chercherParSpecialite")
+    @Operation(summary = "Lister tous les médecins Tries par spécialité")
+    public ResponseEntity<Page<MedecinDTO>> charcherMedecinParSpecialite
+            (@RequestParam String specialite, Pageable pageable){
+        return ResponseEntity.ok(medecinService.chercherParSpecialite(specialite,pageable));
+    }
 
 
 }

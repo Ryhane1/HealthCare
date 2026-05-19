@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.example.healthcare.DTOs.DossierMedicalDTO;
 import org.example.healthcare.Service.DossierMedicalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +51,16 @@ public class DossierMedicalController {
         DossierMedicalDTO dossier = dossierMedicalService.consulterDossierMedical(id);
         return ResponseEntity.ok(dossier);
     }
+
+    @GetMapping
+    @Operation(summary = "Consulter les dossiers médical")
+    public ResponseEntity<Page<DossierMedicalDTO>> getAllDossierMedical
+            (Pageable pageable){
+        Page<DossierMedicalDTO> dossiers = dossierMedicalService.consulterAllDossierMedical(pageable);
+        return ResponseEntity.ok(dossiers);
+    }
+
+
 
 
 

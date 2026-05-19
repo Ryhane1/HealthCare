@@ -5,9 +5,10 @@ import org.example.healthcare.Mappers.PatientMapper;
 import org.example.healthcare.Model.Patient;
 import org.example.healthcare.Repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,17 +33,20 @@ public class PatientService {
     }
 
     public void SupprimerPatient( Long id){
-
         patientRepository.deleteById(id);
     }
 
-    public List<PatientDTO> listerPatients(){
+    public Page<PatientDTO> listerPatients(Pageable pageable){
+        Page<Patient> patientList = patientRepository.findAll(pageable);
+        return patientList.map(patientMapper::toDTO);
+    }
 
-        return patientMapper.toDTOList(patientRepository.findAll());
+    public Page<PatientDTO> chercherPatients(String mot, Pageable pageable){
+        Page<Patient> patientList = patientRepository.findByNomContains(mot, pageable);
+        return patientList.map(patientMapper::toDTO);
     }
 
     public PatientDTO consulterPatient (Long id){
-
         return patientMapper.toDTO(patientRepository.findById(id).get());
     }
 

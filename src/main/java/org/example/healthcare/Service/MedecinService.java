@@ -5,9 +5,9 @@ import org.example.healthcare.Mappers.MedecinMapper;
 import org.example.healthcare.Model.Medecin;
 import org.example.healthcare.Repository.MedecinRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,17 +30,21 @@ public class MedecinService {
         } else {
             return null;
         }
-
     }
 
     public void supprimerMedecin(Long id){
         medecinRepository.deleteById(id);
     }
 
-    public List<MedecinDTO> listerMedecin(){
-        return medecinMapper.toDTOList(medecinRepository.findAll());
+
+    public Page<MedecinDTO> listerMedecin(Pageable pageable){
+        Page<Medecin> medecinList = medecinRepository.findAll(pageable);
+        return medecinList.map(medecinMapper::toDTO);
     }
 
 
-
+    public Page<MedecinDTO> chercherParSpecialite(String specialite, Pageable pageable) {
+        Page<Medecin> medecinList = medecinRepository.findBySpecialite(specialite, pageable);
+        return medecinList.map(medecinMapper::toDTO);
+    }
 }
