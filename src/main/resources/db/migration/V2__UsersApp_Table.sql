@@ -3,5 +3,5 @@ CREATE TABLE userapp (
                          nom VARCHAR(100) NOT NULL,
                          email VARCHAR(150) UNIQUE NOT NULL,
                          password VARCHAR(255),
-                         role VARCHAR(50) NOT NULL DEFAULT 'PATIENT'
+                         role VARCHAR(50) NOT NULL
 );
