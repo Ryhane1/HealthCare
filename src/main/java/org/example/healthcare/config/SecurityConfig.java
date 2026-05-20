@@ -23,6 +23,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/medecin/**").hasAnyRole("MEDECIN", "ADMIN")
+                        .requestMatchers("/patient/**").hasAnyRole("PATIENT", "ADMIN")
+                        .requestMatchers("/rendezvous/**").hasAnyRole("PATIENT", "MEDECIN", "ADMIN")
+                        .requestMatchers("/dossiermedical/**").hasAnyRole("PATIENT", "MEDECIN", "ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

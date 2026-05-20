@@ -3,6 +3,7 @@ package org.example.healthcare.security;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.example.healthcare.Model.UserApp;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,10 @@ public class JwtService {
              return Keys.hmacShaKeyFor(secretKey.getBytes());}
 
 
-    public String generateToken(String username) {
+    public String generateToken(UserDetails userApp) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(userApp.getUsername())
+                .claim("role", userApp.getAuthorities())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getKey())
