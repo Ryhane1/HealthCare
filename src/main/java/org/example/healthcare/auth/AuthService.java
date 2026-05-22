@@ -48,6 +48,7 @@ public class AuthService {
         userApp.setPassword(motdePasseEncoder.encode(userSignUp.getPassword()));
         userApp.setRole(userSignUp.getRole());
         userAppRepository.save(userApp);
+
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(userApp.getNom());
         String token = jwtService.generateToken(userDetails);
         return new UserResponse(token);

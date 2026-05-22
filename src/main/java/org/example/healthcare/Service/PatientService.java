@@ -50,6 +50,12 @@ public class PatientService {
         return patientMapper.toDTO(patientRepository.findById(id).get());
     }
 
+    public PatientDTO consulterPatientParNom (String nom){
+        return patientMapper.toDTO(patientRepository.findByNom(nom));
+    }
+
+
+
 //    public PatientDTO touver (String mot){
 //        return patientRepository.trouverAvecdiagnostic(mot).stream().
 //    }

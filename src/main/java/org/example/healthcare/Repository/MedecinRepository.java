@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface MedecinRepository extends JpaRepository<Medecin, Long> {
 
     Page<Medecin> findBySpecialite(String specialite, Pageable pageable);
+
+    Medecin findByNom(String nom);
 }

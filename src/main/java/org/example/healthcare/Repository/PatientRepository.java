@@ -10,10 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-    Page<Patient> findAll(org.springframework.data.domain.Pageable pageable);
+    Page<Patient> findAll(Pageable pageable);
 
     Page<Patient> findByNomContains(String mot, Pageable pageable);
 
-//    @Query("select p from patient ")
-//    List<Patient> trouverAvecdiagnostic (String motCle);
+    Patient findByNom(String nom);
+
+
 }
