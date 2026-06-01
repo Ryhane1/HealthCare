@@ -7,18 +7,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue("PATIENT")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Patient {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nom;
+public class Patient extends UserApp {
     private String prenom;
-    @Column(unique = true)
-    private String email;
-    private String telephone;
     private LocalDate dateNaissance;
 
     @OneToMany(mappedBy = "patient")

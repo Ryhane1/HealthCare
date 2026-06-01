@@ -51,8 +51,7 @@ public class PatientController {
     @GetMapping("/{id}")
     @Operation(summary = "Consulter les détails d’un patient")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<PatientDTO> consulterPatient (@RequestParam Long id){
-
+    public ResponseEntity<PatientDTO> consulterPatient (@PathVariable Long id){
         return ResponseEntity.ok().body(patientService.consulterPatient(id));
     }
 

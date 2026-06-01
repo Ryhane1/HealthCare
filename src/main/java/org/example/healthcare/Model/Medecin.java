@@ -4,18 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@DiscriminatorValue("MEDECIN")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Medecin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nom;
+public class Medecin extends UserApp {
     private String specialite;
-    @Column(unique = true)
-    private String email;
-    private String telephone;
 
 }

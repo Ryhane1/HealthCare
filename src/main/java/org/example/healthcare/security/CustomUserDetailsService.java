@@ -3,12 +3,15 @@ package org.example.healthcare.security;
 import lombok.RequiredArgsConstructor;
 import org.example.healthcare.Model.UserApp;
 import org.example.healthcare.Repository.UserAppRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +25,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Utilisateur introuvable");
         }
+        List<SimpleGrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+        );
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getNom())
                 .password(user.getPassword())
-                .authorities(new ArrayList<>())
+                .authorities( authorities)
                 .build();
 
     }

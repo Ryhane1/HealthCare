@@ -2,16 +2,15 @@ package org.example.healthcare.Controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.example.healthcare.DTOs.PatientDTO;
 import org.example.healthcare.DTOs.UserAppDTO;
 import org.example.healthcare.Service.UserAppService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ public class UseAppController {
 
     @PostMapping
     @Operation(summary = "Ajouter un User")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserAppDTO> ajouterPatient
             (@RequestBody UserAppDTO userAppDTO ){
         UserAppDTO userAppDTO1 = userAppService.AjouterUser(userAppDTO);
@@ -30,6 +30,7 @@ public class UseAppController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un User")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserAppDTO> modifierUser (@RequestBody UserAppDTO userAppDTO ,
                                                        @PathVariable Long id){
         UserAppDTO userAppDTO1 = userAppService.editUser(id, userAppDTO);
@@ -38,6 +39,7 @@ public class UseAppController {
 
     @DeleteMapping
     @Operation(summary = "Supprimer un user")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> supprimerUser (@RequestParam Long id){
         userAppService.SupprimerUser(id);
         return ResponseEntity.ok().build();
@@ -45,6 +47,7 @@ public class UseAppController {
 
     @GetMapping
     @Operation(summary = "Lister tous les users")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<UserAppDTO>> lisiterUsers (Pageable pageable){
         Page<UserAppDTO> dtoList = userAppService.listerUsers(pageable);
         return ResponseEntity.ok().body(dtoList);
@@ -52,7 +55,8 @@ public class UseAppController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Consulter les détails d’un patient")
-    public ResponseEntity<UserAppDTO> consulterUser (@RequestParam Long id){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserAppDTO> consulterUser (@PathVariable Long id){
 
         return ResponseEntity.ok().body(userAppService.consulterUser(id));
     }
