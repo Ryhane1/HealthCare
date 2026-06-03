@@ -32,5 +32,4 @@ public class UserSignUp {
     private LocalDate dateNaissance;
 
 
-
 }

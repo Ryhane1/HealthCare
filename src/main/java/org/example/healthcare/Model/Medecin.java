@@ -10,6 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Medecin extends UserApp {
-    private String specialite;
 
+    private String specialite;
 }
