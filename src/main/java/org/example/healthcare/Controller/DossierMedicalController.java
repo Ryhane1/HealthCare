@@ -5,9 +5,11 @@ import org.example.healthcare.DTOs.DossierMedicalDTO;
 import org.example.healthcare.Repository.PatientRepository;
 import org.example.healthcare.Service.DossierMedicalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -66,7 +68,7 @@ public class DossierMedicalController {
     public ResponseEntity<DossierMedicalDTO> getDossierMedicalPatient
             (Authentication authentication){
         Long patientId = patientRepository.findByNom(authentication.getName()).getId();
-        DossierMedicalDTO dossier = dossierMedicalService.consulterDossierMedical(patientId);
+        DossierMedicalDTO dossier = dossierMedicalService.consulterDossierMedicalParPatient(patientId);
         return ResponseEntity.ok(dossier);
     }
 
@@ -79,7 +81,21 @@ public class DossierMedicalController {
         return ResponseEntity.ok(dossiers);
     }
 
+    @GetMapping("/{id}/telecharger")
+    public ResponseEntity<byte[]> telechargerDossierMedical(@PathVariable Long id) throws Exception {
+            byte[] pdfBytes = dossierMedicalService.genererPDF(id);
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=dossier_medical_" + id + ".pdf")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(pdfBytes);
+//        DossierMedicalDTO dossierMedicalDTO = dossierMedicalService.consulterDossierMedical(id);
+//        InputStreamResource resource = new InputStreamResource(dossierMedicalService.genererPDF(dossierMedicalDTO));
+//        return ResponseEntity.ok()
+//                .header("Content-Disposition", "attachment; filename=dossier_medical_" + id + ".pdf")
+//                .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
+//                .body(resource);
 
+    }
 
 
 

@@ -9,6 +9,8 @@ import org.example.healthcare.Service.PatientService;
 import org.example.healthcare.Service.RendezVousService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,6 +67,21 @@ public class RendezVousController {
     public ResponseEntity<Page<RendezVousDTO>> filtererParPatient
             (@PathVariable Long patientId , Pageable pageable){
         return ResponseEntity.ok(rendezVousService.filtrerParPatient(patientId, pageable));
+    }
+
+    @GetMapping("/patient/{patientId}/telecharger")
+    @Operation(summary = "Telecharger la liste des Rendez-Vous d'un patient")
+    public byte[] telechargerRVPatient(@PathVariable Long patientId) throws Exception{
+        byte[] pdf =
+                rendezVousService.genererListeRendezVousPdf(patientId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=rendez-vous-patient-"
+                                + patientId + ".pdf")
+                .body(pdf).getBody();
     }
 
     @GetMapping("/patient")
