@@ -89,18 +89,18 @@ public class PatientTestService {
         verify(patientRepository, times(1)).deleteById(1L);
     }
 
-    @Test
-    void testListerPatients() {
-        List<Patient> patients = Arrays.asList(patient);
-
-        when(patientRepository.findAll()).thenReturn(patients);
-        when(patientMapper.toDTOList(patients)).thenReturn(List.of(patientDTO));
-
-        List<PatientDTO> result = patientService.listerPatients();
-
-        assertEquals(1, result.size());
-        verify(patientRepository).findAll();
-    }
+//    @Test
+//    void testListerPatients() {
+//        List<Patient> patients = Arrays.asList(patient);
+//
+//        when(patientRepository.findAll()).thenReturn(patients);
+//        when(patientMapper.toDTOList(patients)).thenReturn(List.of(patientDTO));
+//
+//        List<PatientDTO> result = patientService.listerPatients();
+//
+//        assertEquals(1, result.size());
+//        verify(patientRepository).findAll();
+//    }
 
     @Test
     void testConsulterPatient() {

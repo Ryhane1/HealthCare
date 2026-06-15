@@ -7,7 +7,9 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.healthcare.Enums.RoleUser;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -22,6 +24,12 @@ public class UserSignUp {
     @NotBlank
     @Size(min = 4)
     private String password;
+    private RoleUser role;
+    private String telephone;
+
+    private String specialite;
+    private String prenom;
+    private LocalDate dateNaissance;
 
 
 }

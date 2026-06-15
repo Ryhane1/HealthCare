@@ -4,6 +4,7 @@ import org.example.healthcare.DTOs.DossierMedicalDTO;
 import org.example.healthcare.Model.DossierMedical;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -15,6 +16,6 @@ public interface DossierMedicalMapper {
 
     @Mapping(target = "patient" , ignore = true)
     DossierMedical toEntity(DossierMedicalDTO dossierMedicalDTO);
-    List<DossierMedicalDTO> toDtoList(List<DossierMedical> dossierMedicals);
+//    Page<DossierMedicalDTO> toDtoList(Page<DossierMedical> dossierMedicals);
 
 }

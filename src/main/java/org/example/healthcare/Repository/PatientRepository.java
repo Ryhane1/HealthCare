@@ -1,15 +1,25 @@
 package org.example.healthcare.Repository;
 
 import org.example.healthcare.Model.Patient;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-//    @Query("select p from patient ")
-//    List<Patient> trouverAvecdiagnostic (String motCle);
+    @Override
+    @EntityGraph(attributePaths = {"dossierMedical"})
+    Page<Patient> findAll(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"dossierMedical"})
+    Page<Patient> findByNomContains(String mot, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"dossierMedical"})
+    Patient findByNom(String nom);
+
+
 }

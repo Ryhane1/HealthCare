@@ -4,6 +4,7 @@ import org.example.healthcare.DTOs.RendezVousDTO;
 import org.example.healthcare.Model.RendezVous;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public interface RendezVousMapper {
     @Mapping(target = "patient" , ignore = true)
     @Mapping(target = "medecin" , ignore = true)
     RendezVous toEntity(RendezVousDTO rendezVousDTO);
-    List<RendezVousDTO> toDTOlist(List<RendezVous> rendezVous);
+//    Page<RendezVousDTO> toDTOPage(Page<RendezVous> rendezVous);
 
 }
