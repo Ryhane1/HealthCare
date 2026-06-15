@@ -7,6 +7,7 @@ import org.example.healthcare.Service.UserAppService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,17 @@ public class UseAppController {
     public ResponseEntity<UserAppDTO> consulterUser (@PathVariable Long id){
 
         return ResponseEntity.ok().body(userAppService.consulterUser(id));
+    }
+
+    @GetMapping("/rapport")
+    @Operation(summary = "Telecharger un rapport global ")
+    @PreAuthorize("hasRole('ADMIN')")
+    public byte[] telechargerRapportGlobal() throws Exception{
+        byte[] pdfBytes = userAppService.genererRapportGlobal();
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=Rapport_Global"  + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes).getBody();
     }
 
 

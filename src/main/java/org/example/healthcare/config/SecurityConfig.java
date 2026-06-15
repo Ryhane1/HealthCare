@@ -24,7 +24,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        // public endpoints
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/favicon.ico").permitAll()
+                        .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                        // role protected endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/medecin/**").hasAnyRole("MEDECIN", "ADMIN")
                         .requestMatchers("/patient/**").hasAnyRole("PATIENT", "ADMIN")
@@ -33,6 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
                 )
+                // ensure anonymous users get a 403 handled consistently by Spring
+                .exceptionHandling(e -> e.authenticationEntryPoint(new org.springframework.security.web.authentication.Http403ForbiddenEntryPoint()))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -6,14 +6,19 @@ services:
     container_name: healthcare_app
     depends_on:
       - db
+      - redis
     ports:
       - 8080:8080
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/healthcare_db
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/healthcare_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: healthcare_user
       SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
     networks:
       - app_network
+
+
 
   db:
     image: mysql:8.0
@@ -31,8 +36,35 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  redis:
+    image: redis:7-alpine
+    container_name: healthcare_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network
+
+  redisinsight:
+    image: redis/redisinsight
+    container_name: redis_insight
+    restart: always
+    depends_on:
+      - redis
+    ports:
+      - "5540:5540"
+    volumes:
+      - redisinsight_data:/data
+    networks:
+      - app_network
+
+
 networks:
   app_network:
 
 volumes:
   db_data:
+  redis_data:
+  redisinsight_data:
