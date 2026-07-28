@@ -16,7 +16,7 @@ Ce projet a été réalisé dans le cadre du brief **Développeur Web & Web Mobi
 
 # 🚀 Technologies Utilisées
 
-- Java 17 / 21
+- Java 21
 - Spring Boot
 - Spring Data JPA
 - Hibernate
