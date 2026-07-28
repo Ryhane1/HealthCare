@@ -22,7 +22,7 @@ Ce projet a été réalisé dans le cadre du brief **Développeur Web & Web Mobi
 - Hibernate
 - Flyway
 - Maven
-- MySQL / PostgreSQL
+- MySQL 
 - REST API
 - Swagger OpenAPI
 - MapStruct
